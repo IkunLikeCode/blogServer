@@ -15,7 +15,8 @@ export function initOrm() {
     password: process.env.DATABASE_PASSWORD ?? 'yaobo20030902',
     database: process.env.DATABASE_NAME ?? 'jbook',
     entities: [Post, Category, Reply, Tag, Comment, File],
-    synchronize: false,
+    synchronize: true,
     logging: ['error'],
+    charset: 'utf8mb4',
   });
 }
