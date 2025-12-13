@@ -40,9 +40,10 @@ async function bootstrap() {
     origin: (origin, callback) => {
       // 若配置为 * 则放行所有来源（便于调试）
       if (allowAny) return callback(null, true);
-      // 白名单为空或缺少 Origin 时直接拦截
+      // 无 Origin（同源导航、服务器到服务器、部分代理场景）应放行
+      if (!origin) return callback(null, true);
+      // 白名单为空时拦截（要求明确配置）
       if (!allowed.length) return callback(new Error('Blocked by CORS'), false);
-      if (!origin) return callback(new Error('Blocked by CORS'), false);
       const o = origin.toLowerCase();
       const ok = allowed.some((a) => {
         const t = a.toLowerCase();
