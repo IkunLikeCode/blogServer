@@ -12,6 +12,7 @@ export class File {
     length: 50,
     nullable: false,
     comment: '文件名称',
+    collation: 'utf8mb4_unicode_ci',
   })
   fileName: string;
   @Column({
@@ -19,6 +20,7 @@ export class File {
     length: 255,
     nullable: false,
     comment: '文件路径',
+    collation: 'utf8mb4_unicode_ci',
   })
   filePath: string;
 }

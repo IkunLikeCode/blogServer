@@ -18,6 +18,7 @@ export class Tag {
     length: 50,
     unique: true,
     comment: '标签名称唯一',
+    collation: 'utf8mb4_unicode_ci',
   })
   tagName: string;
 

@@ -17,13 +17,13 @@ export class Post {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'varchar', length: 50, comment: '文章标题', nullable: false })
+  @Column({ type: 'varchar', length: 50, comment: '文章标题', nullable: false, collation: 'utf8mb4_unicode_ci' })
   title: string;
 
-  @Column({ type: 'varchar', length: 50, comment: '文章摘要', nullable: false })
+  @Column({ type: 'varchar', length: 50, comment: '文章摘要', nullable: false, collation: 'utf8mb4_unicode_ci' })
   summary: string;
 
-  @Column({ type: 'longtext', comment: '支持Markdown格式', nullable: false })
+  @Column({ type: 'longtext', comment: '支持Markdown格式', nullable: false, collation: 'utf8mb4_unicode_ci' })
   content: string;
 
   @Column({
@@ -31,6 +31,7 @@ export class Post {
     length: 255,
     comment: '文章封面',
     nullable: false,
+    collation: 'utf8mb4_unicode_ci',
   })
   cover: string;
 

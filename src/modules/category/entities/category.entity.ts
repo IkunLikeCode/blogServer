@@ -16,6 +16,7 @@ export class Category {
     length: 50,
     unique: false,
     comment: '分类名称（唯一）',
+    collation: 'utf8mb4_unicode_ci',
   })
   categoryName: string;
 
@@ -24,6 +25,7 @@ export class Category {
     length: 255,
     nullable: true,
     comment: '分类描述',
+    collation: 'utf8mb4_unicode_ci',
   })
   description: string;
 

@@ -12,7 +12,7 @@ export class Reply {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
-  @Column({ type: 'varchar', length: 50, comment: '回复者昵称（匿名）' })
+  @Column({ type: 'varchar', length: 50, comment: '回复者昵称（匿名）', collation: 'utf8mb4_unicode_ci' })
   nickname: string;
 
   @Column({
@@ -20,10 +20,11 @@ export class Reply {
     length: 100,
     nullable: true,
     comment: '回复者邮箱（可选）',
+    collation: 'utf8mb4_unicode_ci',
   })
   email: string;
 
-  @Column({ type: 'text', comment: '回复内容' })
+  @Column({ type: 'text', comment: '回复内容', collation: 'utf8mb4_unicode_ci' })
   content: string;
 
   @Column({ type: 'tinyint', default: 1, comment: '状态：1-正常，0-已删除' })
