@@ -38,8 +38,10 @@ export class AccessGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
     const req = context.switchToHttp().getRequest();
     const origin = (req.headers.origin as string) || '';
-    const host = (req.headers.host as string) || '';
-    const ip = (req.ip as string) || '';
+    const rawHost = (req.headers.host as string) || '';
+    const host = rawHost.split(':')[0] || '';
+    const xf = (req.headers['x-forwarded-for'] as string) || '';
+    const ip = (xf.split(',')[0] || '').trim() || (req.ip as string) || '';
 
     const allowAnyOrigin = this.allowedOrigins.includes('*');
     const allowAnyHost = this.allowedHosts.includes('*');
@@ -55,6 +57,7 @@ export class AccessGuard implements CanActivate {
 
     // 只要命中任意一种白名单即放行
     if (origin && matchValue(origin, this.allowedOrigins)) return true;
+    if (rawHost && matchValue(rawHost, this.allowedHosts)) return true;
     if (host && matchValue(host, this.allowedHosts)) return true;
     if (ip && this.allowedIps.includes(ip)) return true;
 
