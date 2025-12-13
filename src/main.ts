@@ -7,6 +7,22 @@ import { HttpExceptionFilter } from './filters/http.exception';
 import { AllExceptionFilter } from './filters/all.exception';
 import { existsSync, readFileSync } from 'node:fs';
 
+if (existsSync('.env')) {
+  const content = readFileSync('.env', 'utf8');
+  content
+    .split('\n')
+    .map((l) => l.trim())
+    .filter((l) => l && !l.startsWith('#'))
+    .forEach((l) => {
+      const i = l.indexOf('=');
+      if (i > 0) {
+        const k = l.slice(0, i).trim();
+        const v = l.slice(i + 1).trim();
+        if (!process.env[k]) process.env[k] = v;
+      }
+    });
+}
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   // 全局拦截器：统一成功响应结构
@@ -14,22 +30,6 @@ async function bootstrap() {
   // 全局异常过滤器：HttpException 与非 HttpException 分别处理
   app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalFilters(new AllExceptionFilter());
-  // 启动时解析 .env 文件注入到 process.env（简单解析，不覆盖已有环境变量）
-  if (existsSync('.env')) {
-    const content = readFileSync('.env', 'utf8');
-    content
-      .split('\n')
-      .map((l) => l.trim())
-      .filter((l) => l && !l.startsWith('#'))
-      .forEach((l) => {
-        const i = l.indexOf('=');
-        if (i > 0) {
-          const k = l.slice(0, i).trim();
-          const v = l.slice(i + 1).trim();
-          if (!process.env[k]) process.env[k] = v;
-        }
-      });
-  }
   // CORS：仅允许 ALLOWED_ORIGINS 白名单来源，支持 *.example.com 通配后缀
   const allowed = (process.env.ALLOWED_ORIGINS ?? '')
     .split(',')
