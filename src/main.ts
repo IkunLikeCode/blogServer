@@ -53,8 +53,7 @@ async function bootstrap() {
     },
     credentials: true,
   });
-  // 接口统一增加 /api 前缀
-  app.setGlobalPrefix('api');
+  app.setGlobalPrefix('blog');
   // 全局 Guard：非浏览器来源或兜底二次校验（Origin/Host/IP）
   app.useGlobalGuards(new AccessGuard());
 
