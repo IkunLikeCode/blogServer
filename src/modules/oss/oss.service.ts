@@ -4,8 +4,8 @@ import { TosClient } from '@volcengine/tos-sdk';
 export class OssService {
   readonly OssClient: TosClient;
   constructor() {
-    const accessKeyId = process.env['TOS_ACCESS_KEY'];
-    const accessKeySecret = process.env['TOS_SECRET_KEY'];
+    const accessKeyId = process.env.TOS_ACCESS_KEY;
+    const accessKeySecret = process.env.TOS_SECRET_KEY;
 
     if (!accessKeyId || !accessKeySecret) {
       throw new Error('缺少key值');
